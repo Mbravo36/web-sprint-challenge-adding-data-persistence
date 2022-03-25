@@ -1,19 +1,23 @@
 // build your `/api/tasks` router here
-const router = require('express').Router();
-const Resources = require('./model');
+const express = require('express');
+const Task = require('./model');
+
+const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    Resources.findResources()
-    .then(resources => {
-        res.json(resources)
-    })
-    .catch(next)
+   Task.find()
+   .then(tasks => {
+       res.json(tasks)
+   })
+   .catch(next)
 })
+
 router.post('/', (req, res, next) => {
-    Resources.postResources(req.body)
-    .then(newResources => {
-        res.status(201).json(newResources)
-    })
-    .catch(next)
+   Task.add(req.body)
+   .then(task => {
+     res.status(201).json(task)
+   })
+   .catch(next)
 })
-module.exports = router;
+
+  module.exports = router;
